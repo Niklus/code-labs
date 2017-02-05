@@ -1,0 +1,89 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/google-map/google-map.html">
+<link rel="import" href="../../bower_components/point-overlay/point-overlay.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="maps-app">
+  <template>
+    
+    <style>
+      :host {
+        display: block;
+        font-family: 'Roboto', Arial, sans-serif;
+      }
+
+      google-map{
+        height: 500px;
+      }
+
+      paper-card {
+        position: absolute;
+        top: 25px;
+        right: 25px;
+      }
+
+    </style>
+
+    <h1>[[prop1]]</h1>
+     
+    <!-- map --> 
+    <google-map id="gMap" latitude="38.6" longitude="-95.8" zoom="5" map="{{map}}" !disable-default-ui
+        styles='[{"stylers":[{"saturation":-85}]},{"featureType":"water","stylers":[{"lightness":-20}]}]'
+        api-key="AIzaSyA2iUezbWPjOIrZrbscpl-VP1UynXp1GAg"
+        on-google-map-ready="setPointSize" 
+        on-zoom-changed="setPointSize">
+    <!-- <google-map-marker latitude="37.779" longitude="-122.3892"
+      title="Go Giants!" draggable="true"></google-map-marker> -->
+    </google-map>
+    
+    <!-- point overlay -->
+    <point-overlay data={{data}} map="[[map]]" uniforms="{{uniforms}}">
+    </point-overlay>
+    
+    <!-- card slider 
+    <paper-card elevation="2">
+      <paper-slider min="5" max="100" value="30" immediate-value="{{uniforms.pointSize}}">
+      </paper-slider>
+    </paper-card> -->
+    
+    <!-- iron ajax -->
+    <iron-ajax auto handle-as="json"
+      url="../../bower_components/point-overlay/tornadoes-1950-2014.json"
+      last-response="{{data}}">
+    </iron-ajax>
+
+  </template>
+  <script>
+    Polymer({
+
+      is: 'maps-app',
+
+      properties: {
+        prop1: {
+          type: String,
+          value: 'Google Maps',
+        },
+      },
+
+      setPointSize: function(){
+        this.uniforms.pointSize = Math.exp(0.3 * this.map.getZoom());
+        this.notifyPath('uniforms.pointSize', this.uniforms.pointSize); //Still notifies ? without this..
+      },
+
+      attached: function () {  //What the diference between attached and ready
+
+        this.$.gMap.addEventListener('api-load', function(e) {
+          /* console.log(this);
+            console.log(this.map);
+            console.log(this.map.latitude);
+          */
+         });
+
+
+      }
+
+    });
+  </script>
+</dom-module>

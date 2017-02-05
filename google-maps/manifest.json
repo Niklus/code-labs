@@ -1,0 +1,7 @@
+{
+  "name": "google-maps-1",
+  "short_name": "google-maps-1",
+  "description": "Google Maps &amp; Web Components",
+  "start_url": "/",
+  "display": "standalone"
+}
