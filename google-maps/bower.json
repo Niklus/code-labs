@@ -1,5 +1,5 @@
 {
-  "name": "google-maps-1",
+  "name": "google-maps",
   "description": "Google Maps &amp; Web Components",
   "main": "index.html",
   "dependencies": {
@@ -8,7 +8,9 @@
     "point-overlay": "googlecodelabs/polymer-webgl-visualization",
     "paper-slider": "PolymerElements/paper-slider#^1.0.13",
     "paper-card": "PolymerElements/paper-card#^1.1.4",
-    "geo-location": "^1.0.6"
+    "geo-location": "^1.0.6",
+    "paper-item": "^1.2.1",
+    "paper-tabs": "^1.8.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

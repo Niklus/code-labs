@@ -1,6 +1,6 @@
 {
-  "name": "google-maps-1",
-  "short_name": "google-maps-1",
+  "name": "google-maps",
+  "short_name": "google-maps",
   "description": "Google Maps &amp; Web Components",
   "start_url": "/",
   "display": "standalone"

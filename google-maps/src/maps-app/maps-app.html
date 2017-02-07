@@ -5,6 +5,14 @@
 <link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/geo-location/geo-location.html">
+<link rel="import" href="../../bower_components/google-map/google-map-directions.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/iron-icons/maps-icons.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 
 <dom-module id="maps-app">
   <template>
@@ -18,6 +26,10 @@
       h1{
         text-align: center;
       }
+       
+      h2{
+        text-align: center;
+      }
 
       google-map{
         height: 500px;
@@ -27,42 +39,99 @@
 
       paper-card {
         position: absolute;
-        top: 25px;
-        right: 25px;
+        top: 15px;
+        right: 15px;
+      }
+
+      paper-tabs {
+        --paper-tabs-selection-bar-color: #0D47A1;
+        margin-top: 16px;
+      }
+
+      paper-tab {
+        --paper-tab-ink: #BBDEFB;
+      }
+
+      paper-tab iron-icon {
+        margin-right: 10px;
+      }
+
+      paper-tab.iron-selected {
+        background: rgb(66, 133, 244);
+        color: white;
       }
 
     </style>
 
     <h1>[[prop1]]</h1>
 
-    <h2>Google Maps Directions</h2>
-
-    <geo-location 
-    latitude="{{lat}}" longitude="{{lng}}">
+    <h2>Directions</h2>
+    
+    <!--Geolocation-->
+    <geo-location watch-pos high-accuracy
+      latitude="{{lat}}" longitude="{{lng}}">
     </geo-location>
    
-    <google-map latitude=[[lat]] longitude=[[lng]] disable-default-ui
-        api-key="AIzaSyA2iUezbWPjOIrZrbscpl-VP1UynXp1GAg">
+   <!--Map-->
+    <google-map map={{map1}} latitude=[[lat]] longitude=[[lng]]
+      api-key="AIzaSyA2iUezbWPjOIrZrbscpl-VP1UynXp1GAg">
       <google-map-marker latitude=[[lat]] longitude=[[lng]]
-        title="Home!" draggable="true"></google-map-marker> -->
+        title="You are here!" draggable="true"></google-map-marker>
     </google-map>
+    
+    <!--Directions-->
+    <google-map-directions map=[[map1]]
+      start-address="{{start}}"
+      end-address="{{end}}"
+      api-key="AIzaSyA2iUezbWPjOIrZrbscpl-VP1UynXp1GAg"
+      travel-mode="[[travelMode]]">
+    </google-map-directions>
+    
+    <!--Inputs-->
+    <paper-card class="cardInput" elevation="2"> <!-- elevation controls the amount of box shadow -->
+      <paper-icon-item>
+        <iron-icon icon="search" item-icon></iron-icon>
+        <paper-input label="Start address" value="{{start}}"></paper-input>
+      </paper-icon-item>
+      <paper-icon-item>
+        <iron-icon icon="search" item-icon></iron-icon>
+        <paper-input label="End address" value="{{end}}"></paper-input>
+      </paper-icon-item>
+    
+      <!--Travel Modes-->
+      <paper-tabs selected="{{travelMode}}" attr-for-selected="label">
+        <paper-tab label="DRIVING">
+          <iron-icon icon="maps:directions-car"></iron-icon>
+          <span>DRIVING</span>
+        </paper-tab>
+        <paper-tab label="WALKING">
+          <iron-icon icon="maps:directions-walk"></iron-icon>
+          <span>WALKING</span>
+        </paper-tab>
+        <paper-tab label="BICYCLING">
+          <iron-icon icon="maps:directions-bike"></iron-icon>
+          <span>BICYCLING</span>
+        </paper-tab>
+        <paper-tab label="TRANSIT">
+          <iron-icon icon="maps:directions-transit"></iron-icon>
+          <span>TRANSIT</span>
+        </paper-tab>
+      </paper-tabs>
+    </paper-card>
 
     <hr>
 
-     <h2>Google Maps Visualization</h2>
+     <h2>Visualization: <em>tornadoes-1950-2014</em></h2>
      
     <!-- map --> 
-    <google-map id="gMap" latitude="38.6" longitude="-95.8" zoom="5" map="{{map}}"
+    <google-map id="gMap" latitude="38.6" longitude="-95.8" zoom="5" map="{{map2}}"
         styles='[{"stylers":[{"saturation":-85}]},{"featureType":"water","stylers":[{"lightness":-20}]}]'
         api-key="AIzaSyA2iUezbWPjOIrZrbscpl-VP1UynXp1GAg"
         on-google-map-ready="setPointSize" 
-        on-zoom-changed="setPointSize">
-    <!-- <google-map-marker latitude="37.779" longitude="-122.3892"
-      title="Go Giants!" draggable="true"></google-map-marker> -->
-    </google-map>
+        on-zoom-changed="setPointSize"></google-map>
     
     <!-- point overlay -->
-    <point-overlay data={{data}} map="[[map]]" uniforms="{{uniforms}}">
+    <point-overlay data={{data}} map="[[map2]]" uniforms="{{uniforms}}">
     </point-overlay>
     
     <!-- card slider 
@@ -91,20 +160,8 @@
       },
 
       setPointSize: function(){
-        this.uniforms.pointSize = Math.exp(0.3 * this.map.getZoom());
-        this.notifyPath('uniforms.pointSize', this.uniforms.pointSize); //Still notifies ? without this..
-      },
-
-      attached: function () {  //What the diference between attached and ready
-
-        this.$.gMap.addEventListener('api-load', function(e) {
-          /* console.log(this);
-            console.log(this.map);
-            console.log(this.map.latitude);
-          */
-         });
-
-
+        this.uniforms.pointSize = Math.exp(0.3 * this.map2.getZoom());
+        this.notifyPath('uniforms.pointSize', this.uniforms.pointSize);
       }
 
     });
