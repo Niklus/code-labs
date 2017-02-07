@@ -27,9 +27,17 @@
     </style>
 
     <h1>[[prop1]]</h1>
+
+    <google-map fit-to-marker latitude="37.779" longitude="-122.3892" disable-default-ui
+        api-key="AIzaSyA2iUezbWPjOIrZrbscpl-VP1UynXp1GAg">
+      <google-map-marker latitude="37.779" longitude="-122.3892"
+        title="Go Giants!" draggable="true"></google-map-marker> -->
+    </google-map>
+
+    <hr>
      
     <!-- map --> 
-    <google-map id="gMap" latitude="38.6" longitude="-95.8" zoom="5" map="{{map}}" !disable-default-ui
+    <google-map id="gMap" latitude="38.6" longitude="-95.8" zoom="5" map="{{map}}"
         styles='[{"stylers":[{"saturation":-85}]},{"featureType":"water","stylers":[{"lightness":-20}]}]'
         api-key="AIzaSyA2iUezbWPjOIrZrbscpl-VP1UynXp1GAg"
         on-google-map-ready="setPointSize" 
