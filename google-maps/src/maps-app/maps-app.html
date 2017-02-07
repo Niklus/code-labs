@@ -4,6 +4,7 @@
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/geo-location/geo-location.html">
 
 <dom-module id="maps-app">
   <template>
@@ -14,8 +15,14 @@
         font-family: 'Roboto', Arial, sans-serif;
       }
 
+      h1{
+        text-align: center;
+      }
+
       google-map{
         height: 500px;
+        width: 80%;
+        margin: 0 auto;
       }
 
       paper-card {
@@ -28,13 +35,21 @@
 
     <h1>[[prop1]]</h1>
 
-    <google-map fit-to-marker latitude="37.779" longitude="-122.3892" disable-default-ui
+    <h2>Google Maps Directions</h2>
+
+    <geo-location 
+    latitude="{{lat}}" longitude="{{lng}}">
+    </geo-location>
+   
+    <google-map latitude=[[lat]] longitude=[[lng]] disable-default-ui
         api-key="AIzaSyA2iUezbWPjOIrZrbscpl-VP1UynXp1GAg">
-      <google-map-marker latitude="37.779" longitude="-122.3892"
-        title="Go Giants!" draggable="true"></google-map-marker> -->
+      <google-map-marker latitude=[[lat]] longitude=[[lng]]
+        title="Home!" draggable="true"></google-map-marker> -->
     </google-map>
 
     <hr>
+
+     <h2>Google Maps Visualization</h2>
      
     <!-- map --> 
     <google-map id="gMap" latitude="38.6" longitude="-95.8" zoom="5" map="{{map}}"
@@ -71,7 +86,7 @@
       properties: {
         prop1: {
           type: String,
-          value: 'Google Maps',
+          value: 'Web Components',
         },
       },
 
