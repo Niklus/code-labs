@@ -6,7 +6,7 @@
     <link rel="manifest" href="manifest.json">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
 
-    <!-- Older Chrome configuration -->
+    <!-- Older Chrome -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Notes">
     <link rel="icon"  sizes="192x192" href="bower_components/note-app/common/images/icon-4x.png">
@@ -25,28 +25,36 @@
     <link rel="import" href="note-app.html">
 
     <title>Notes</title>
+
+    <style>
+      body {
+        margin: 0;
+      }
+    </style>
   </head>
-
-  <!--Service Worker configuration-->
-  <platinum-sw-register
-    auto-register
-    skip-waiting
-    clients-claim
-    reload-on-install
-    href="sw-import.js">
-    <platinum-sw-cache
-        default-cache-strategy="networkFirst">
-    </platinum-sw-cache>
-  </platinum-sw-register>
-
-  <!--Firebase Configuration-->
-  <firebase-app
-    name="notes"
-    api-key="AIzaSyCd5VTjU2Wb7IeWmEqXZ9A7pkeu5twsapQ"
-    auth-domain="chatee-9b3b6.firebaseapp.com"
-    database-url="https://chatee-9b3b6.firebaseio.com">
-  </firebase-app>
-</script>
   <body>
+    
+    <!--Service Worker configuration-->
+    <platinum-sw-register
+      auto-register
+      skip-waiting
+      clients-claim
+      reload-on-install
+      href="sw-import.js">
+      <platinum-sw-cache
+          default-cache-strategy="networkFirst">
+      </platinum-sw-cache>
+    </platinum-sw-register>
+
+    <!--Firebase Configuration-->
+    <firebase-app name="notes"
+      api-key="AIzaSyCd5VTjU2Wb7IeWmEqXZ9A7pkeu5twsapQ"
+      auth-domain="chatee-9b3b6.firebaseapp.com"
+      database-url="https://chatee-9b3b6.firebaseio.com">
+    </firebase-app>
+    
+    <!-- App Declaration -->
+    <note-app></note-app>
+  
   </body>
 </html>
