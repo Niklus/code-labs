@@ -1,6 +1,4 @@
-# \<google-maps-1\>
-
-Google Maps &amp; Web Components
+# Google Maps &amp; Web Components
 
 ## Install the Polymer-CLI
 
